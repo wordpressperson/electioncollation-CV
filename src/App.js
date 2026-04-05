@@ -1,105 +1,119 @@
 import React, { Component } from 'react';
 import AddStateResult from './components/Layouts/AddStateResult.jsx';
 import DisplayStateResults from './components/Layouts/DisplayStateResults.jsx';
-import ViewCollation from './components/Layouts/ViewCollation.jsx';
 import ViewResults from './components/Layouts/ViewResults.jsx';
-import Datasource from './components/Datasource.jsx'
-
-import {Link} from 'react-router-dom'
+// Removed: import Datasource from './components/Datasource.jsx'
+import { Link } from 'react-router-dom';
 
 class App extends Component {
-
-state = {
-  nameofstate: '',
-  apcVotes: '',
-  pdpVotes: '',
-  flag: 0,
-
-  voteState: {},
-  stateVote: []
-	}
-
-  componentDidMount() {
-    this.setState({stateVote: Datasource})
-  }
+  state = {
+    nameofstate: '',
+    apcVotes: '',
+    pdpVotes: '',
+    flag: 0,
+    voteState: {},
+    stateVote: []          // starts empty → fully reusable
+  };
 
   handleChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value 
-    })
-  }
+      [e.target.name]: e.target.value
+    });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.addstateVote(this.state.nameofstate, this.state.apcVotes, this.state.pdpVotes);
-    e.target.pdpVotes.value=''
-    e.target.apcVotes.value=''
-    this.setState({flag: 1})
-  }
 
-  addstateVote=(nameofstate, apcVotes, pdpVotes)=>{
-    const newStateVotes=[...this.state.stateVote, {nameofstate, apcVotes, pdpVotes}]
-    this.setState({stateVote:newStateVotes})
+    const { nameofstate, apcVotes, pdpVotes } = this.state;
 
+    // Basic validation
+    if (!nameofstate) {
+      alert('Please select a state!');
+      return;
+    }
 
-    const getAPCTotal = newStateVotes.reduce((sum, a) => {
-      if(!sum.apcVotes) sum.apcVotes = 0;
-      if(!sum.pdpVotes) sum.pdpVotes = 0;
-      sum.pdpVotes += parseInt(a.pdpVotes)
-      sum.apcVotes += parseInt(a.apcVotes)
-      return sum;
-      }, {})  
+    // Prevent adding the same state twice
+    const alreadyExists = this.state.stateVote.some(
+      (s) => s.nameofstate === nameofstate
+    );
+    if (alreadyExists) {
+      alert('This state has already been added!');
+      return;
+    }
 
-      this.setState({voteState: getAPCTotal})
-  }
+    // Add the new result
+    this.addstateVote(nameofstate, apcVotes, pdpVotes);
 
-  compileCollation=()=>{
-    
-  }
+    // Reset form (controlled inputs)
+    this.setState({
+      nameofstate: '',
+      apcVotes: '',
+      pdpVotes: '',
+      flag: 1
+    });
+  };
 
-   // getAPCTotal = this.state.stateVote.reduce((sum, a) => {
-   //  if(!sum.apcVotes) sum.apcVotes = 0;
-   //  if(!sum.pdpVotes) sum.pdpVotes = 0;
-   //  sum.pdpVotes += parseInt(a.pdpVotes)
-   //  sum.apcVotes += parseInt(a.apcVotes)
-   //  return sum;
-   //  }, {})
+  addstateVote = (nameofstate, apcVotes, pdpVotes) => {
+    const newStateVotes = [
+      ...this.state.stateVote,
+      { nameofstate, apcVotes, pdpVotes }
+    ];
+
+    this.setState({ stateVote: newStateVotes });
+
+    // Cleaner, immutable total calculation
+    const totals = newStateVotes.reduce(
+      (acc, curr) => ({
+        apcVotes: (acc.apcVotes || 0) + parseInt(curr.apcVotes || 0, 10),
+        pdpVotes: (acc.pdpVotes || 0) + parseInt(curr.pdpVotes || 0, 10)
+      }),
+      {}
+    );
+
+    this.setState({ voteState: totals });
+  };
+
+  // (compileCollation and old commented code removed – not used)
 
   render() {
-    const DisplayStateResult=this.state.stateVote.map(function (datasource, index) {
-            return (<DisplayStateResults 
-              key={index} 
-              name={datasource.nameofstate} 
-              apcVotes={datasource.apcVotes} 
-              pdpVotes={datasource.pdpVotes}
-              />)
-          })
+    const DisplayStateResult = this.state.stateVote.map((datasource, index) => (
+      <DisplayStateResults
+        key={index}
+        name={datasource.nameofstate}
+        apcVotes={datasource.apcVotes}
+        pdpVotes={datasource.pdpVotes}
+      />
+    ));
 
     return (
-        <div className="container">
-          <AddStateResult 
-            handleChange={this.handleChange} 
-            nameofstate={this.state.nameofstate} 
-            apcVotes={this.state.apcVotes}
-            pdpVotes={this.state.pdpVotes}
-            handleSubmit={this.handleSubmit}
-            />
-            <br />
-            <table className="table">
-            <caption><h4>Collated Results</h4></caption>
-            <thead>
-              <tr className="info">
-                <th width='100'>State</th>
-                <th width='50'>APC</th>
-                <th width='50'>PDP</th>
-              </tr>
-            </thead>
-            </table>
+      <div className="container">
+        <AddStateResult
+          handleChange={this.handleChange}
+          nameofstate={this.state.nameofstate}
+          apcVotes={this.state.apcVotes}
+          pdpVotes={this.state.pdpVotes}
+          handleSubmit={this.handleSubmit}
+        />
 
-            {DisplayStateResult}
+        <br />
 
-            {this.state.flag===1 && <ViewResults Total={this.state.voteState} flag={this.state.flag}/>}
-          </div>
+        <table className="table">
+          <caption><h4>Collated Results</h4></caption>
+          <thead>
+            <tr className="info">
+              <th width="100">State</th>
+              <th width="50">APC</th>
+              <th width="50">PDP</th>
+            </tr>
+          </thead>
+        </table>
+
+        {DisplayStateResult}
+
+        {this.state.flag === 1 && (
+          <ViewResults Total={this.state.voteState} flag={this.state.flag} />
+        )}
+      </div>
     );
   }
 }
