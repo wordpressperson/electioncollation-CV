@@ -1,68 +1,99 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```markdown
+# 🇳🇬 Nigerian Election Collation App
 
-## Available Scripts
+A simple, clean and fully functional React web application for collating election results between **APC** and **PDP** across all 36 states of Nigeria + the Federal Capital Territory (FCT).
 
-In the project directory, you can run:
+Built many years ago and now updated to be modern, reusable and production-ready.
 
-### `npm start`
+![Demo](https://via.placeholder.com/800x400/007bff/ffffff?text=Election+Collation+Demo)  
+*(Replace with a real screenshot after you test locally)*
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## ✨ Features
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- **All 37 locations** (36 states + FCT) in a clean dropdown
+- Add APC and PDP votes for any state
+- Prevents duplicate state entries
+- Real-time collation table
+- Automatic total calculation for both parties
+- Fully responsive Bootstrap UI
+- Starts empty (no hardcoded sample data)
+- Easy to repurpose for future elections
 
-### `npm test`
+## 🚀 Tech Stack
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React** (Class-based components)
+- **React Router**
+- **Bootstrap 4** (for styling)
+- **JavaScript (ES6)**
+- Deployed on **Render**
 
-### `npm run build`
+## 🛠️ How to Run Locally
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+### Steps
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/wordpressperson/electioncollation-CV.git
+   cd electioncollation-CV
+   ```
 
-### `npm run eject`
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. **Start the development server**
+   ```bash
+   npm start
+   ```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The app will load with an empty results table. You can now add results for any Nigerian state.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 📁 Project Structure
 
-## Learn More
+```
+src/
+├── components/
+│   └── Layouts/
+│       ├── AddStateResult.jsx      ← Full 37-state dropdown
+│       ├── DisplayStateResults.jsx
+│       ├── ViewCollation.jsx
+│       └── ViewResults.jsx
+├── App.js                          ← Main logic (updated)
+└── index.js
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🔧 Recent Improvements
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Removed hardcoded `Datasource.jsx`
+- Added all 36 states + FCT
+- Duplicate prevention
+- Cleaner total calculation
+- Fully controlled form inputs
+- Better validation and UX
 
-### Code Splitting
+## 📝 Future Enhancements (Ideas)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+- Export results to CSV / PDF
+- LocalStorage persistence
+- Dark mode support
+- Convert to functional components + Hooks
+- Support for more political parties
+- Search/filter in results table
 
-### Analyzing the Bundle Size
+## 📄 License
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+This project is open-source and free to use. Feel free to fork, modify, or deploy it for any election-related purpose.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+**Made with ❤️ for Nigeria's electoral process**
 
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+If you find this useful, please give the repo a ⭐ on GitHub!
+```
