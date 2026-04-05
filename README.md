@@ -96,4 +96,3 @@ This project is open-source and free to use. Feel free to fork, modify, or deplo
 **Made with ❤️ for Nigeria's electoral process**
 
 If you find this useful, please give the repo a ⭐ on GitHub!
-```
