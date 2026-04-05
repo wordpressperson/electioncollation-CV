@@ -3,7 +3,7 @@ import AddStateResult from './components/Layouts/AddStateResult.jsx';
 import DisplayStateResults from './components/Layouts/DisplayStateResults.jsx';
 import ViewResults from './components/Layouts/ViewResults.jsx';
 // Removed: import Datasource from './components/Datasource.jsx'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; 
 
 class App extends Component {
   state = {
@@ -12,7 +12,7 @@ class App extends Component {
     pdpVotes: '',
     flag: 0,
     voteState: {},
-    stateVote: []          // starts empty → fully reusable
+    stateVote: []        // starts empty → fully reusable
   };
 
   handleChange = (e) => {
